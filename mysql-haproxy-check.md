@@ -53,3 +53,20 @@ socat tcp-listen:$1,reuseaddr,fork 'exec:bash -c health_check'
 
 exit 0
 ```
+#### running server as a service (using systemd)
+```
+[root@ibfixtest init.d]# cat /etc/systemd/system/server-agent.service
+[Unit]
+Description=server agent Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/sbin/server_agent 2345
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
+```
